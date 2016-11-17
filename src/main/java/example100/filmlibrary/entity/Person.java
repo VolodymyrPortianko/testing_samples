@@ -1,12 +1,11 @@
 package example100.filmlibrary.entity;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
@@ -20,12 +19,12 @@ import java.time.LocalDate;
 public class Person extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotEmpty
+    @NotBlank
     @Length(max = 50)
     private String name;
 
     @Column(name = "surname", nullable = false)
-    @NotEmpty
+    @NotBlank
     @Length(max = 50)
     private String surname;
 

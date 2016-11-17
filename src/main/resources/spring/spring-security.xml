@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
+
+    <http create-session="stateless">
+        <http-basic/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="SELECT email, password, 1 FROM users WHERE email = ?"
+                               authorities-by-username-query="SELECT email, role FROM users WHERE email = ?"
+            />
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

@@ -1,7 +1,7 @@
 package example100.filmlibrary.entity;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ import java.util.List;
 public class Film extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotEmpty
+    @NotBlank
     @Length(max = 50)
     private String name;
 

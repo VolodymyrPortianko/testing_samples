@@ -1,8 +1,10 @@
 package example100.filmlibrary.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 public class User extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotEmpty
+    @NotBlank
     @Length(max = 50)
     private String name;
 
@@ -29,16 +31,22 @@ public class User extends BaseEntity {
     private String email;
 
     @Column(name = "password")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @Column(name = "role")
+    @JsonIgnore
+    private String role;
 
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password) {
+    public User(Integer id, String name, String email, String password, String role) {
         super(id);
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public String getName() {
@@ -72,6 +80,7 @@ public class User extends BaseEntity {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

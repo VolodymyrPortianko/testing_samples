@@ -17,15 +17,15 @@ public class UserFactory {
     public static final ModelMatcher<User, String> USER_MATCHER = new ModelMatcher<>(User::toString);
 
     public static User getAdmin() {
-        return new User(1, "admin", "admin@gmail.com", "111");
+        return new User(1, "admin", "admin@gmail.com", "111", "ROLE_ADMIN");
     }
 
     public static User getUser1() {
-        return new User(2, "user1", "user1@gmail.com", "222");
+        return new User(2, "user1", "user1@gmail.com", "222", "ROLE_USER");
     }
 
     public static User getUser2() {
-        return new User(3, "user2", "user2@gmail.com", "333");
+        return new User(3, "user2", "user2@gmail.com", "333", "ROLE_USER");
     }
 
     public static List<User> getAllUsers() {
@@ -33,6 +33,6 @@ public class UserFactory {
     }
 
     public static User getNewUser() {
-        return new User(null, "newUser", "newUser@gmail.com", "444");
+        return new User(null, "newUser", "newUser@gmail.com", "444", "ROLE_USER");
     }
 }
