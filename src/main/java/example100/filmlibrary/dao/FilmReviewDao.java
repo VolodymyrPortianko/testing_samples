@@ -19,4 +19,6 @@ public interface FilmReviewDao {
     boolean delete(int id);
 
     List<FilmReview> getByUser(int userId);
+
+    List<FilmReview> getByFilm(int filmId);
 }

@@ -1,6 +1,12 @@
 package example100.filmlibrary.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,23 +19,41 @@ import java.util.List;
 @Table(name = "films")
 public class Film extends BaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
+    @NotEmpty
+    @Length(max = 50)
     private String name;
+
     @Column(name = "genre")
     @Enumerated(EnumType.ORDINAL)
     private Genre genre;
+
     @Column(name = "description")
+    @Length(max = 255)
     private String description;
+
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "director_id")
     private Person director;
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "film_actors",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private List<Person> actors;
+    @Size(min = 1)
+    private List<Person> actors = new ArrayList<>();
 
     public Film() {
+    }
+
+    public Film(Integer id, String name, Genre genre, String description, Person director, List<Person> actors) {
+        super(id);
+        this.name = name;
+        this.genre = genre;
+        this.description = description;
+        this.director = director;
+        this.actors = actors;
     }
 
     public String getName() {

@@ -3,6 +3,7 @@ package example100.filmlibrary.dao.impl;
 import example100.filmlibrary.dao.UserDao;
 import org.springframework.stereotype.Repository;
 import example100.filmlibrary.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,12 +16,14 @@ import java.util.List;
  * @author Volodymyr Portianko
  */
 @Repository
+@Transactional(readOnly = true)
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
+    @Transactional
     public User save(User user) {
         if (user.isNew()) {
             em.persist(user);
@@ -31,6 +34,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
         return em.createQuery("DELETE FROM User u WHERE u.id=" + id).executeUpdate() != 0;
     }
@@ -42,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByEmail(String email) {
-        return em.createQuery("SELECT u FROM User u WHERE u.email=" + email, User.class).getSingleResult();
+        return em.createQuery("SELECT u FROM User u WHERE u.email='" + email + "'", User.class).getSingleResult();
     }
 
     @Override

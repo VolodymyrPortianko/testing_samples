@@ -1,6 +1,10 @@
 package example100.filmlibrary.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created on 13.11.2016.
@@ -14,17 +18,31 @@ public class FilmReview extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)
+    @NotNull
     private Film film;
+
     @Column(name = "review")
+    @Length(max = 1024)
     private String review;
+
     @Column(name = "rating")
+    @Range(min = 0, max = 10)
     private Integer rating;
 
     public FilmReview() {
+    }
+
+    public FilmReview(Integer id, User user, Film film, String review, Integer rating) {
+        super(id);
+        this.user = user;
+        this.film = film;
+        this.review = review;
+        this.rating = rating;
     }
 
     public Film getFilm() {

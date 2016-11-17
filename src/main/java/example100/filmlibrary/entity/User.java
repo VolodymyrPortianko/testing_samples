@@ -1,5 +1,9 @@
 package example100.filmlibrary.entity;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,13 +19,26 @@ import javax.persistence.Table;
 public class User extends BaseEntity {
 
     @Column(name = "name", nullable = false)
+    @NotEmpty
+    @Length(max = 50)
     private String name;
-    @Column(name = "email", nullable = false)
+
+    @Column(name = "email", nullable = false, unique = true)
+    @Length(max = 50)
+    @Email
     private String email;
+
     @Column(name = "password")
     private String password;
 
     public User() {
+    }
+
+    public User(Integer id, String name, String email, String password) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public String getName() {

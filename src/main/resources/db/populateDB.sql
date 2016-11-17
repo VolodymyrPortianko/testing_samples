@@ -22,9 +22,9 @@ INSERT INTO PERSONS (NAME, SURNAME, DATE_OF_BIRTH) VALUES ('Harrison','Ford','19
 INSERT INTO PERSONS (NAME, SURNAME, DATE_OF_BIRTH) VALUES ('Steven','Spielberg','1946-12-18');
 INSERT INTO PERSONS (NAME, SURNAME, DATE_OF_BIRTH) VALUES ('Kate','Capshaw','1953-11-3');
 
-INSERT INTO FILMS (NAME, GENRE, DIRECTOR_ID, DESCRIPTION) VALUES ('Terminator 2: Judgment Day',1,3,'A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her young son, John Connor, from a more advanced cyborg, made out of liquid metal.');
-INSERT INTO FILMS (NAME, GENRE, DIRECTOR_ID, DESCRIPTION) VALUES ('Star Wars: Episode IV - A New Hope',2,4,'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the galaxy from the Empire''s world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.');
-INSERT INTO FILMS (NAME, GENRE, DIRECTOR_ID, DESCRIPTION) VALUES ('Indiana Jones and the Temple of Doom',3,7,'After arriving in India, Indiana Jones is asked by a desperate village to find a mystical stone. He agrees, and stumbles upon a secret cult plotting a terrible plan in the catacombs of an ancient palace.');
+INSERT INTO FILMS (NAME, GENRE, DIRECTOR_ID, DESCRIPTION) VALUES ('Terminator 2: Judgment Day',0,3,'A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her young son, John Connor, from a more advanced cyborg, made out of liquid metal.');
+INSERT INTO FILMS (NAME, GENRE, DIRECTOR_ID, DESCRIPTION) VALUES ('Star Wars: Episode IV - A New Hope',1,4,'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a wookiee and two droids to save the galaxy from the Empire''s world-destroying battle-station, while also attempting to rescue Princess Leia from the evil Darth Vader.');
+INSERT INTO FILMS (NAME, GENRE, DIRECTOR_ID, DESCRIPTION) VALUES ('Indiana Jones and the Temple of Doom',2,7,'After arriving in India, Indiana Jones is asked by a desperate village to find a mystical stone. He agrees, and stumbles upon a secret cult plotting a terrible plan in the catacombs of an ancient palace.');
 
 INSERT INTO FILM_ACTORS (FILM_ID, PERSON_ID) VALUES (1,1);
 INSERT INTO FILM_ACTORS (FILM_ID, PERSON_ID) VALUES (1,2);

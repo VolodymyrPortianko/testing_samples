@@ -59,6 +59,23 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!-- Validation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.3.2.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
         <!-- Web -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -72,7 +89,6 @@
             <version>${spring.framework.version}</version>
         </dependency>
 
-
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
@@ -84,6 +100,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.framework.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>1.0.5</version>
+            <scope>test</scope>
         </dependency>
 
         <!--  hsqldb -->
@@ -91,6 +114,13 @@
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
+        </dependency>
+
+        <!-- Tools -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
         </dependency>
 
     </dependencies>
