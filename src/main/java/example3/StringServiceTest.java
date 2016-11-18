@@ -13,13 +13,7 @@ public class StringServiceTest {
 
     @Test
     public void testMultiplyString() throws Exception {
-        StringService sut = new StringService();
-        String anyString = "anyString";
-        String expected = anyString + anyString + anyString;
 
-        String actual = sut.multiplyString(anyString, 3);
-
-        Assert.assertEquals(expected, actual);
     }
 
 }
