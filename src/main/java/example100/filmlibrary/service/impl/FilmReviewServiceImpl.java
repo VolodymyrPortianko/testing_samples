@@ -3,12 +3,11 @@ package example100.filmlibrary.service.impl;
 import example100.filmlibrary.dao.FilmReviewDao;
 import example100.filmlibrary.entity.FilmReview;
 import example100.filmlibrary.entity.User;
+import example100.filmlibrary.service.AuthService;
 import example100.filmlibrary.service.FilmReviewService;
-import example100.filmlibrary.service.UserService;
 import example100.filmlibrary.util.exeption.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,12 +28,12 @@ public class FilmReviewServiceImpl implements FilmReviewService {
     private FilmReviewDao filmReviewDao;
 
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @Override
     @Transactional
     public FilmReview save(FilmReview filmReview) {
-        User authUser = userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        User authUser = authService.getAuthenticatedUser();
         filmReview.setUser(authUser);
         return filmReviewDao.save(filmReview);
     }
@@ -42,30 +41,32 @@ public class FilmReviewServiceImpl implements FilmReviewService {
     @Override
     @Transactional
     public void update(FilmReview filmReview) {
-        User authUser = userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        User authUser = authService.getAuthenticatedUser();
         FilmReview reviewToUpdate = filmReviewDao.get(filmReview.getId());
+
         if (isNull(reviewToUpdate)) throw new NotFoundException(String.format("Film review with id=%d is not found", filmReview.getId()));
 
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(role -> role.toString().equals("ROLE_ADMIN"))
-                || authUser.getId().equals(reviewToUpdate.getId())) {
+        if (authUser.getRole().equals("ROLE_ADMIN") || authUser.getId().equals(reviewToUpdate.getUser().getId())) {
             filmReviewDao.save(filmReview);
         } else throw new AccessDeniedException("This action is not allowed");
     }
 
     @Override
     public FilmReview get(int id) {
-        return filmReviewDao.get(id);
+        FilmReview filmReview = filmReviewDao.get(id);
+        if (isNull(filmReview)) throw new NotFoundException(String.format("Film review with id=%d is not found", id));
+        return filmReview;
     }
 
     @Override
     @Transactional
     public void delete(int id) {
-        User authUser = userService.getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        User authUser = authService.getAuthenticatedUser();
         FilmReview reviewToDelete = filmReviewDao.get(id);
+
         if (isNull(reviewToDelete)) throw new NotFoundException(String.format("Film review with id=%d is not found", id));
 
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(role -> role.toString().equals("ROLE_ADMIN"))
-                || authUser.getId().equals(reviewToDelete.getId())) {
+        if (authUser.getRole().equals("ROLE_ADMIN") || authUser.getId().equals(reviewToDelete.getUser().getId())) {
             filmReviewDao.delete(id);
         } else throw new AccessDeniedException("This action is not allowed");
     }

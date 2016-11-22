@@ -21,13 +21,13 @@ import javax.persistence.Table;
 public class User extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotBlank
-    @Length(max = 50)
+    @NotBlank(message = "Username should not be empty")
+    @Length(max = 50, message = "Username should be only 50 chars max")
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)
-    @Length(max = 50)
-    @Email
+    @Length(max = 50, message = "Email should be only 50 chars max")
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "password")
@@ -71,6 +71,14 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

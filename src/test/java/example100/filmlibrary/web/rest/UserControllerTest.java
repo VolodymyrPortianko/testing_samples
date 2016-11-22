@@ -96,6 +96,24 @@ public class UserControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testCreateNotValidEntity() throws Exception {
+        User userToSave = UserFactory.getNewUser();
+        userToSave.setName("");
+        userToSave.setEmail("notValidEmail");
+
+        mockMvc.perform(post(USERS_URL)
+                .content(objectMapper.writeValueAsString(userToSave))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .with(userHttpBasic(UserFactory.getAdmin()))
+        )
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().contentType(MediaType.TEXT_PLAIN))
+                .andExpect(content().string(CoreMatchers.containsString("Username should not be empty")))
+                .andExpect(content().string(CoreMatchers.containsString("Email should be valid")));
+    }
+
+    @Test
     public void testDelete() throws Exception {
         User userToDelete = UserFactory.getUser1();
 
