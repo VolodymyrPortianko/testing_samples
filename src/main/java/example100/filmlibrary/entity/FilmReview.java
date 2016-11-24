@@ -18,20 +18,19 @@ public class FilmReview extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @NotNull
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)
-    @NotNull
+    @NotNull(message = "You should specify film for review")
     private Film film;
 
     @Column(name = "review")
-    @Length(max = 1024)
+    @Length(max = 1024, message = "Review is too long. Max 1024 chars")
     private String review;
 
     @Column(name = "rating")
-    @Range(min = 0, max = 10)
+    @Range(min = 0, max = 10, message = "Rating should be a number with value from 0 to 10")
     private Integer rating;
 
     public FilmReview() {

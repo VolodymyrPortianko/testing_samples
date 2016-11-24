@@ -20,8 +20,8 @@ import java.util.List;
 public class Film extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotBlank
-    @Length(max = 50)
+    @NotBlank(message = "Name of film should not be blank")
+    @Length(max = 50, message = "Name of film should contain only 50 chars max")
     private String name;
 
     @Column(name = "genre")
@@ -29,11 +29,11 @@ public class Film extends BaseEntity {
     private Genre genre;
 
     @Column(name = "description")
-    @Length(max = 255)
+    @Length(max = 255, message = "Description is too long. Max 255 chars")
     private String description;
 
     @ManyToOne
-    @NotNull
+    @NotNull(message = "Every film should have a director")
     @JoinColumn(name = "director_id")
     private Person director;
 
@@ -41,7 +41,7 @@ public class Film extends BaseEntity {
     @JoinTable(name = "film_actors",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
-    @Size(min = 1)
+    @Size(min = 1, message = "Film should have at least 1 actor")
     private List<Person> actors = new ArrayList<>();
 
     public Film() {

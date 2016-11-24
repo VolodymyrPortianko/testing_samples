@@ -2,15 +2,13 @@ package example100.filmlibrary.service.impl;
 
 import example100.filmlibrary.dao.UserDao;
 import example100.filmlibrary.entity.User;
+import example100.filmlibrary.service.AuthService;
 import example100.filmlibrary.service.UserService;
 import example100.filmlibrary.util.exeption.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -25,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private AuthService authService;
 
     @Override
     public User get(int id) {
@@ -48,10 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-        User authUser = getByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        User authUser = authService.getAuthenticatedUser();
 
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().anyMatch(role -> role.toString().equals("ROLE_ADMIN"))
-                || authUser.getId().equals(user.getId())) {
+        if (authUser.getRole().equals("ROLE_ADMIN") || authUser.getId().equals(user.getId())) {
             userDao.save(user);
         } else throw new AccessDeniedException("This action is not allowed");
     }
