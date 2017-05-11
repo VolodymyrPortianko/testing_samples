@@ -1,5 +1,6 @@
 package example11;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,11 +27,12 @@ public class SongService {
     }
 
     public Song getSong(String name) {
-        return songStorage.getSongByName(name);
+        Song song = songStorage.getSongByName(name);
+        System.out.println(String.format("Song %s was loaded", song.getName()));
+        return song;
     }
 
-    public List<Song> getSortedSongs() {
-        return getSongs().stream().sorted(Comparator.comparing(Song::getName))
-                .collect(Collectors.toList());
+    public List<Song> getSongsByNames(String... names) {
+        return Arrays.stream(names).map(this::getSong).collect(Collectors.toList());
     }
 }
