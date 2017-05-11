@@ -1,8 +1,13 @@
 package example22;
 
+import com.google.common.collect.ImmutableList;
+import example21.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
+
+import java.util.List;
 
 /**
  * Created on 18.11.2016.
@@ -25,6 +30,19 @@ public class SongServiceTest {
 
     @Test
     public void testPlayRandomSong() throws Exception {
+        Song songA = new Song("anySinger", "A", new byte[]{});
+        Song songB = new Song("anySinger", "B", new byte[]{});
+        Song songC = new Song("anySinger", "C", new byte[]{});
+        List<Song> songList = ImmutableList.of(songA, songB, songC);
+        Mockito.doReturn(songList).when(songStorageMock).getAllSongs();
 
+        sut.playRandomSong();
+
+        Mockito.verify(playerMock).play(Mockito.argThat(new ArgumentMatcher<Song>() {
+            @Override
+            public boolean matches(Object argument) {
+                return songList.contains(argument);
+            }
+        }));
     }
 }

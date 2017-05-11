@@ -70,7 +70,11 @@ public class SongServiceTest {
                 .when(sut).getSong(Mockito.argThat(new ArgumentMatcher<String>() {
             @Override
             public boolean matches(Object argument) {
-                return false;
+                return songA.getName().equals(argument)
+                        || songB.getName().equals(argument)
+                        || songC.getName().equals(argument);
+
+
             }
         }));
 

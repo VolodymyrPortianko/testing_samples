@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +18,12 @@ public class SongServiceTest {
 
     @Test
     public void testGetSongs() throws Exception {
-        Song dummySong = Mockito.mock(Song.class);
+        Song song = new Song("test", "test", new byte[]{});
         SongStorage songStorageMock = Mockito.mock(SongStorage.class);
-        Mockito.when(songStorageMock.getAllSongs()).thenReturn(Lists.newArrayList(dummySong));
+
+        List<Song> expected = new ArrayList<>();
+        expected.add(song);
+        Mockito.when(songStorageMock.getAllSongs()).thenReturn(Lists.newArrayList(song, song));
         SongService sut = new SongService(songStorageMock);
 
         List<Song> actual = sut.getSongs();

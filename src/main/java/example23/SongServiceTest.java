@@ -50,8 +50,9 @@ public class SongServiceTest {
 
         InOrder inOrder = Mockito.inOrder(songStorageMock, playerMock);
 
-        inOrder.verify(songStorageMock).getSongByName(anyName);
+
         inOrder.verify(playerMock).turnOn();
+        inOrder.verify(songStorageMock).getSongByName(anyName);
         inOrder.verify(playerMock).play(dummySong);
         inOrder.verify(playerMock).turnOff();
     }
