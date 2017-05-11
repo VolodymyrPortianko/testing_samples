@@ -9,6 +9,6 @@ package example1;
 public class StringService {
 
     public String getString() {
-        return "string";
+        return "ABC";
     }
 }

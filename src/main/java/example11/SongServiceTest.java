@@ -1,8 +1,11 @@
 package example11;
 
-import org.junit.Before;
+import com.google.common.collect.ImmutableList;
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.List;
 
 /**
  * Created on 18.11.2016.
@@ -12,25 +15,19 @@ import org.mockito.Mockito;
  */
 public class SongServiceTest {
 
-    private SongService sut;
-    private SongStorage songStorageMock;
-    private Player playerMock;
-
-    @Before
-    public void setUp() throws Exception {
-        songStorageMock = Mockito.mock(SongStorage.class);
-        playerMock = Mockito.mock(Player.class);
-        sut = new SongService(songStorageMock, playerMock);
-    }
-
     @Test
-    public void testPlaySong() throws Exception {
-        String anyName = "anyName";
-        Song dummySong = Mockito.mock(Song.class);
-        Mockito.doReturn(dummySong).when(songStorageMock).getSongByName(anyName);
+    public void testGetSortedSongs() throws Exception {
+        Song song1 = new Song("anySinger", "A", new byte[]{});
+        Song song2 = new Song("anySinger", "B", new byte[]{});
+        Song song3 = new Song("anySinger", "C", new byte[]{});
 
-        sut.playSong(anyName);
+        SongStorage storageDummy = Mockito.mock(SongStorage.class);
+        SongService sut = Mockito.spy(new SongService(storageDummy));
+        Mockito.when(sut.getSongs()).thenReturn(ImmutableList.of(song2, song3, song1));
 
-        Mockito.verify(playerMock).play(dummySong);
+        List<Song> expected = ImmutableList.of(song1, song2, song3);
+        List<Song> actual = sut.getSortedSongs();
+
+        Assert.assertEquals(expected, actual);
     }
 }

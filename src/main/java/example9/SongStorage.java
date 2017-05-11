@@ -1,5 +1,7 @@
 package example9;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,6 @@ public class SongStorage {
     }
 
     public List<Song> getAllSongs() {
-        return new ArrayList<>(songs);
+        return ImmutableList.copyOf(songs);
     }
 }

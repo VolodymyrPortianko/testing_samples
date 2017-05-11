@@ -1,6 +1,9 @@
 package example11;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created on 18.11.2016.
@@ -11,23 +14,23 @@ import java.util.List;
 public class SongService {
 
     private SongStorage songStorage;
-    private Player player;
 
-    public SongService(SongStorage songStorage, Player player) {
+    public SongService(SongStorage songStorage) {
         this.songStorage = songStorage;
-        this.player = player;
     }
 
     public List<Song> getSongs() {
-        return songStorage.getAllSongs();
+        List<Song> songs = songStorage.getAllSongs();
+        System.out.println("Songs from storage was loaded. Count: " + songs.size());
+        return songs;
     }
 
     public Song getSong(String name) {
         return songStorage.getSongByName(name);
     }
 
-    public void playSong(String name) {
-        Song song = songStorage.getSongByName(name);
-        player.play(song);
+    public List<Song> getSortedSongs() {
+        return getSongs().stream().sorted(Comparator.comparing(Song::getName))
+                .collect(Collectors.toList());
     }
 }

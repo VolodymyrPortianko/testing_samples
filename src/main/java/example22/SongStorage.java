@@ -1,7 +1,4 @@
-package example8;
-
-import com.google.common.collect.ImmutableList;
-import sun.rmi.transport.Connection;
+package example22;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +25,10 @@ public class SongStorage {
     }
 
     public List<Song> getAllSongs() {
-        return ImmutableList.copyOf(songs);
+        return new ArrayList<>(songs);
+    }
+
+    public Song getSongByName(String name) {
+        return songs.stream().filter(song -> song.getName().equals(name)).findFirst().get();
     }
 }

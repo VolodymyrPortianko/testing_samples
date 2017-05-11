@@ -1,7 +1,6 @@
-package example12;
+package example21;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created on 18.11.2016.
@@ -30,10 +29,5 @@ public class SongService {
     public void playSong(String name) {
         Song song = songStorage.getSongByName(name);
         player.play(song);
-    }
-
-    public void playRandomSong() {
-        List<Song> songs = songStorage.getAllSongs();
-        player.play(songs.get(ThreadLocalRandom.current().nextInt(songs.size())));
     }
 }

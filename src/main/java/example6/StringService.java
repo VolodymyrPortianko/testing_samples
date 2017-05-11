@@ -9,7 +9,7 @@ package example6;
 public class StringService {
 
     public String getString() {
-        return "string";
+        return "ABC";
     }
 
     public String doubleString(String inputString) {

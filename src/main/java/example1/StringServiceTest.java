@@ -14,7 +14,7 @@ public class StringServiceTest {
     @Test
     public void testGetString() throws Exception {
         StringService sut = new StringService();
-        String expected = "string";
+        String expected = "ABC";
 
         String actual = sut.getString();
 

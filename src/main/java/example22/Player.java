@@ -1,4 +1,4 @@
-package example11;
+package example22;
 
 /**
  * Created on 18.11.2016.
