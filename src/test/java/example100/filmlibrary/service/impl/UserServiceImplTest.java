@@ -39,18 +39,17 @@ public class UserServiceImplTest {
     @Mock
     private AuthService authServiceMock;
 
-    @Mock
-    private User dummyUser;
+    private User testUser = new User();
 
     @Test
     public void testGet() throws Exception {
         int anyId = 1;
-        Mockito.when(userDaoMock.get(anyId)).thenReturn(dummyUser);
+        Mockito.when(userDaoMock.get(anyId)).thenReturn(testUser);
 
         User actual = sut.get(anyId);
 
         Mockito.verify(userDaoMock).get(anyId);
-        assertSame(dummyUser, actual);
+        assertSame(testUser, actual);
     }
 
     @Test
@@ -67,12 +66,12 @@ public class UserServiceImplTest {
     @Test
     public void testGetByEmail() throws Exception {
         String dummyEmail = "anyEmail";
-        Mockito.when(userDaoMock.getByEmail(dummyEmail)).thenReturn(dummyUser);
+        Mockito.when(userDaoMock.getByEmail(dummyEmail)).thenReturn(testUser);
 
         User actual = sut.getByEmail(dummyEmail);
 
         Mockito.verify(userDaoMock).getByEmail(dummyEmail);
-        assertSame(dummyUser, actual);
+        assertSame(testUser, actual);
     }
 
     @Test
@@ -88,52 +87,52 @@ public class UserServiceImplTest {
 
     @Test
     public void testSave() throws Exception {
-        Mockito.when(userDaoMock.save(dummyUser)).thenReturn(dummyUser);
+        Mockito.when(userDaoMock.save(testUser)).thenReturn(testUser);
 
-        User actualUser = sut.save(dummyUser);
+        User actualUser = sut.save(testUser);
 
-        Mockito.verify(userDaoMock).save(dummyUser);
-        assertSame(dummyUser, actualUser);
+        Mockito.verify(userDaoMock).save(testUser);
+        assertSame(testUser, actualUser);
     }
 
     @Test
     public void testUpdateSameUserAuthenticated() throws Exception {
-        Mockito.when(dummyUser.getId()).thenReturn(1);
-        Mockito.when(dummyUser.getRole()).thenReturn("ROLE_USER");
-        Mockito.when(authServiceMock.getAuthenticatedUser()).thenReturn(dummyUser);
+        testUser.setId(1);
+        testUser.setRole("ROLE_USER");
+        Mockito.when(authServiceMock.getAuthenticatedUser()).thenReturn(testUser);
 
-        sut.update(dummyUser);
+        sut.update(testUser);
 
-        Mockito.verify(userDaoMock).save(dummyUser);
+        Mockito.verify(userDaoMock).save(testUser);
     }
 
     @Test
     public void testUpdateNotSameUserAuthenticated() throws Exception {
-        Mockito.when(dummyUser.getId()).thenReturn(1);
+        testUser.setId(1);
 
-        User authUser = Mockito.mock(User.class);
-        Mockito.when(authUser.getId()).thenReturn(2);
-        Mockito.when(authUser.getRole()).thenReturn("ROLE_USER");
+        User authUser = new User();
+        authUser.setId(2);
+        authUser.setRole("ROLE_USER");
         Mockito.when(authServiceMock.getAuthenticatedUser()).thenReturn(authUser);
 
         expectedException.expect(AccessDeniedException.class);
         expectedException.expectMessage("This action is not allowed");
 
-        sut.update(dummyUser);
+        sut.update(testUser);
     }
 
     @Test
     public void testUpdateAdminAuthenticated() throws Exception {
-        Mockito.when(dummyUser.getId()).thenReturn(1);
+        testUser.setId(1);
 
-        User authUser = Mockito.mock(User.class);
-        Mockito.when(authUser.getId()).thenReturn(2);
-        Mockito.when(authUser.getRole()).thenReturn("ROLE_ADMIN");
+        User authUser = new User();
+        authUser.setId(2);
+        authUser.setRole("ROLE_ADMIN");
         Mockito.when(authServiceMock.getAuthenticatedUser()).thenReturn(authUser);
 
-        sut.update(dummyUser);
+        sut.update(testUser);
 
-        Mockito.verify(userDaoMock).save(dummyUser);
+        Mockito.verify(userDaoMock).save(testUser);
     }
 
 

@@ -17,6 +17,8 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
             </props>
         </property>
     </bean>

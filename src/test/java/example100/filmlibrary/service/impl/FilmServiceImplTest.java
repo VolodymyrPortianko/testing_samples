@@ -38,50 +38,49 @@ public class FilmServiceImplTest {
     @Mock
     private FilmDao filmDao;
 
-    @Mock
-    private Film dummyFilm;
+    private Film testFilm = new Film();
 
     @Test
     public void testSave() throws Exception {
-        when(filmDao.save(dummyFilm)).thenReturn(dummyFilm);
+        when(filmDao.save(testFilm)).thenReturn(testFilm);
 
-        Film actualFilm = sut.save(dummyFilm);
+        Film actualFilm = sut.save(testFilm);
 
-        verify(filmDao).save(dummyFilm);
-        assertSame(dummyFilm, actualFilm);
+        verify(filmDao).save(testFilm);
+        assertSame(testFilm, actualFilm);
     }
 
     @Test
     public void testUpdate() throws Exception {
         int anyId = 1;
-        when(dummyFilm.getId()).thenReturn(anyId);
-        when(filmDao.get(anyId)).thenReturn(dummyFilm);
+        testFilm.setId(anyId);
+        when(filmDao.get(anyId)).thenReturn(testFilm);
 
-        sut.update(dummyFilm);
+        sut.update(testFilm);
 
-        verify(filmDao).save(dummyFilm);
+        verify(filmDao).save(testFilm);
     }
 
     @Test
     public void testUpdateNotFound() throws Exception {
         int anyId = 1000;
-        when(dummyFilm.getId()).thenReturn(anyId);
+        testFilm.setId(anyId);
         when(filmDao.get(anyId)).thenReturn(null);
 
         expectedException.expect(NotFoundException.class);
         expectedException.expectMessage(String.format("Film with id=%d is not found", anyId));
 
-        sut.update(dummyFilm);
+        sut.update(testFilm);
     }
 
     @Test
     public void testGet() throws Exception {
         int anyId = 1;
-        when(filmDao.get(anyId)).thenReturn(dummyFilm);
+        when(filmDao.get(anyId)).thenReturn(testFilm);
 
         Film actual = sut.get(anyId);
 
-        assertSame(dummyFilm, actual);
+        assertSame(testFilm, actual);
     }
 
     @Test
@@ -98,11 +97,11 @@ public class FilmServiceImplTest {
     @Test
     public void testGetByName() throws Exception {
         String anyName = "anyName";
-        when(filmDao.getByName(anyName)).thenReturn(dummyFilm);
+        when(filmDao.getByName(anyName)).thenReturn(testFilm);
 
         Film actual = sut.getByName(anyName);
 
-        assertSame(dummyFilm, actual);
+        assertSame(testFilm, actual);
     }
 
     @Test
@@ -139,7 +138,7 @@ public class FilmServiceImplTest {
 
     @Test
     public void testGetAll() throws Exception {
-        List<Film> expected = Lists.newArrayList(dummyFilm, dummyFilm, dummyFilm);
+        List<Film> expected = Lists.newArrayList(testFilm, testFilm, testFilm);
         when(filmDao.getAll()).thenReturn(expected);
 
         List<Film> actual = filmDao.getAll();
