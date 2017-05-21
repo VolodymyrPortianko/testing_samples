@@ -64,4 +64,9 @@ public abstract class AbstractControllerTest {
         return SecurityMockMvcRequestPostProcessors.httpBasic(user.getEmail(), user.getPassword());
     }
 
+    protected RequestPostProcessor userFormBased(User user) {
+        return SecurityMockMvcRequestPostProcessors.user(user.getEmail()).password(user.getPassword())
+                .roles(user.getRole().replace("ROLE_", ""));
+    }
+
 }

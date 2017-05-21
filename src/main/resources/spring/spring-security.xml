@@ -7,10 +7,19 @@
 
     <global-method-security secured-annotations="enabled" pre-post-annotations="enabled"/>
 
-    <http create-session="stateless">
+    <http pattern="/rest/**" create-session="stateless">
         <http-basic/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>
+    </http>
+
+    <http>
+        <intercept-url pattern="/users/**" access="isAuthenticated()"/>
+        <form-login login-page="/login" default-target-url="/films"
+                    authentication-failure-url="/login?error=true"
+                    login-processing-url="/spring_security_check"/>
+        <logout logout-success-url="/login"/>
+        <!--<csrf disabled="true"/>-->
     </http>
 
     <authentication-manager>

@@ -1,5 +1,8 @@
 package example100.filmlibrary.testdata;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 
 import java.util.List;
@@ -35,4 +38,19 @@ public class ModelMatcher<T, R> {
         return list.stream().map(converter).collect(Collectors.toList());
     }
 
+
+    public Matcher<T> getMatcherFor(T t1) {
+
+        return new BaseMatcher<T>() {
+            @Override
+            public boolean matches(Object item) {
+                return entityConverter.apply(t1).equals(entityConverter.apply((T)item));
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(entityConverter.apply(t1).toString());
+            }
+        };
+    }
 }

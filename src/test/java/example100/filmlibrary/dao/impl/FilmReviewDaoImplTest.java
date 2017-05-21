@@ -87,7 +87,7 @@ public class FilmReviewDaoImplTest {
     }
 
     @Test
-    public void testRatingNotValidValues(int rating) throws Exception {
+    public void testRatingNotValidValues() throws Exception {
 
     }
 }
