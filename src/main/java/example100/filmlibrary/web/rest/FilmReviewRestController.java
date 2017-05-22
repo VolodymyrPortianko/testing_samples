@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/rest/reviews")
-public class FilmReviewController {
+public class FilmReviewRestController {
 
     @Autowired
     private FilmReviewService filmReviewService;

@@ -14,10 +14,16 @@
     </http>
 
     <http>
-        <intercept-url pattern="/users/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/users/new" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/users/*" method="GET" access="permitAll()"/>
+        <intercept-url pattern="/users/*" method="POST" access="isAuthenticated()"/>
+
+        <intercept-url pattern="/films/new" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/films/*" method="GET" access="permitAll()"/>
+        <intercept-url pattern="/films/*" method="POST" access="hasRole('ADMIN')"/>
+
         <form-login login-page="/login" default-target-url="/films"
-                    authentication-failure-url="/login?error=true"
-                    login-processing-url="/spring_security_check"/>
+                    authentication-failure-url="/login?error=true"/>
         <logout logout-success-url="/login"/>
         <!--<csrf disabled="true"/>-->
     </http>

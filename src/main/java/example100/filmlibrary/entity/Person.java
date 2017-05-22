@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created on 13.11.2016.
@@ -29,12 +30,12 @@ public class Person extends BaseEntity {
     private String surname;
 
     @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
+    private LocalDateTime dateOfBirth;
 
     public Person() {
     }
 
-    public Person(Integer id, String name, String surname, LocalDate dateOfBirth) {
+    public Person(Integer id, String name, String surname, LocalDateTime dateOfBirth) {
         super(id);
         this.name = name;
         this.surname = surname;
@@ -57,11 +58,11 @@ public class Person extends BaseEntity {
         this.surname = surname;
     }
 
-    public LocalDate getDateOfBirth() {
+    public LocalDateTime getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(LocalDateTime dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

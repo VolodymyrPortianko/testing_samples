@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Volodymyr Portianko
  */
-public class UserControllerTest extends AbstractControllerTest {
+public class UserRestControllerTest extends AbstractControllerTest {
 
     private static final String USERS_URL = "/rest/users";
 

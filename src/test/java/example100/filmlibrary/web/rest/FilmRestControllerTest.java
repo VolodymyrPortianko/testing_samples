@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  *
  * @author Volodymyr Portianko
  */
-public class FilmControllerTest extends AbstractControllerTest {
+public class FilmRestControllerTest extends AbstractControllerTest {
 
     private static final String FILMS_URL = "/rest/films";
 
